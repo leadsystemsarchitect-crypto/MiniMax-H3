@@ -32,7 +32,11 @@ Install the H3 prompt writing skill — one of nine skills bundled with this rep
 npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill h3-prompt-writing
 ```
 
-It ships with two prompt guides under `skills/h3-prompt-writing/references/`: `base-en.txt` for text/keyframe modes and `ref-en.txt` for full-reference (Ref2VA) mode. The remaining eight are style-specific video generation skills:
+It ships with two prompt guides under `skills/h3-prompt-writing/references/`: `base-en.txt` for text/keyframe modes and `ref-en.txt` for full-reference (Ref2VA) mode.
+
+**Agent compatibility:** `h3-prompt-writing` is a plain Markdown + reference-file skill with no external API calls, so it works in Claude Code, the Claude Agent SDK, Cursor, Windsurf, OpenAI-based agents/Codex, LangChain, or any other harness that can read a `SKILL.md` and local files. The bundled `skills/h3-prompt-writing/agents/openai.yaml` only adds optional UI metadata (display name, description, default prompt) for the ChatGPT/Codex skills UI, per [OpenAI's skill spec](https://learn.chatgpt.com/docs/build-skills) — it does not limit the skill to OpenAI agents.
+
+The remaining eight are style-specific video generation skills built for the MiniMax Hub's canvas workflow (`hub_generate_video`, `hub_generate_image`, canvas nodes, choice cards, etc.) and are not portable to generic agent harnesses:
 
 <table align="center">
   <tr>
@@ -78,7 +82,7 @@ H3 supports the following input and output specifications:
 | Model Variant | Input Mode | Specifications |
 |---|---|---|
 | H3-Base-FL2VA | First-and-last-frame mode | Supports zero, one, or two input images. <br><br>- No image input: Text-to-video mode <br>- One image input: First-frame-to-video or last-frame-to-video generation <br>- Two image inputs: First-and-last-frame-to-video generation |
-| H3-Base-Ref2VA | Omni-reference mode | Supports multi-modal reference inputs: <br><br>- **Images:** ≤ 9 images <br>- **Videos:** ≤ 3 clips; each clip must be 2–15 seconds long; total duration ≤ 15 seconds <br>- **Audio:** ≤ 3 clips; audio must be accompanied by image or video input and cannot be used as the sole input; each clip must be 2–15 seconds long; total duration ≤ 15 seconds <br>- **Mixed inputs:** Maximum number of files across all input types is 12 |
+| H3-Base-Ref2VA | Omni-reference mode | Supports multi-modal reference inputs: <br><br>- **Images:** ≤ 9 images <br>- **Videos:** ≤ 3 clips; each clip must be 2–15 seconds long; total duration ≤ 15 seconds <br>- **Audio:** ≤ 3 clips; each clip must be 2–15 seconds long; total duration ≤ 15 seconds <br>- **Mixed inputs:** Maximum number of files across all input types is 12 |
 
 ![Image](assets/overview.png)
 
@@ -263,7 +267,7 @@ The following three use cases T2VA, FL2VA, and Ref2VA demonstrate how to reprodu
 | FL2VA | [View script](scripts/readme/reproducible-768p-fl2va-request.sh) | [fl2va.mp4](assets/fl2va.mp4) |
 | Ref2VA | [View script](scripts/readme/reproducible-768p-ref2va-request.sh) | [ref2va.mp4](assets/ref2va.mp4) |
 
-### Full 2K\-Workflow
+### Full 2K Workflow
 
 This section explains how to combine a locally deployed SGLang service with the official **H3\-Context\-IR** and **H3\-Regenerate\-2K** APIs to reproduce the quality of 2K videos generated directly by the MiniMax API\.
 Before you begin, configure the SGLang endpoint and your MiniMax API credentials:
